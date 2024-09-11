@@ -1,3 +1,7 @@
+# Start delete ubuntu user
+sudo deluser --remove-home ubuntu
+# End delete ubuntu user
+
 # Start configure zsh
 cat <<EOF > /home/zp4rker/.zshrc
 # The following lines were added by compinstall
@@ -66,7 +70,7 @@ sudo ip6tables -X
 
 
 # Start setup ufw
-cat <<EOF >> /etc/ufw/ufw.conf
+cat <<EOF | sudo tee -a /etc/ufw/ufw.conf
 
 # Disable IPv6 rules
 IPV6=no
@@ -87,3 +91,21 @@ sudo apt-get update -y
 sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 sudo usermod -a -G docker zp4rker
 # End install docker
+
+# Start setup sslh
+sudo mkdir /sslh
+sudo chmod a=rwx /sslh
+cat <<EOF > /sslh/docker-compose.yml
+services:
+  sslh:
+    image: ghcr.io/yrutschle/sslh:latest
+    container_name: sslh
+    command: --foreground --listen 0.0.0.0:80 --ssh localhost:22 --http localhost:8080
+    cap_add:
+      - NET_RAW
+      - NET_BIND_SERVICE
+    network_mode: host
+    restart: unless-stopped
+EOF
+newgrp docker
+docker compose -f /sslh/docker-compose.yml up -d

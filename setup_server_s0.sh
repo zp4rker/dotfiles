@@ -20,5 +20,7 @@ chmod u=rw,og= ~/.ssh/authorized_keys
 EOS
 echo "zp4rker ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/zp4rker
 sudo chmod ug=r,o= /etc/sudoers.d/zp4rker
-sudo deluser --remove-home ubuntu
 # End setup user
+
+# Reboot
+sudo reboot now
