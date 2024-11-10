@@ -107,5 +107,3 @@ services:
     network_mode: host
     restart: unless-stopped
 EOF
-newgrp docker
-docker compose -f /srv/sslh/docker-compose.yml up -d
