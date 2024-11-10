@@ -93,9 +93,9 @@ sudo usermod -a -G docker zp4rker
 # End install docker
 
 # Start setup sslh
-sudo mkdir /sslh
-sudo chmod a=rwx /sslh
-cat <<EOF > /sslh/docker-compose.yml
+sudo mkdir /srv/sslh
+sudo chown -R zp4rker:zp4rker /srv/sslh
+cat <<EOF > /srv/sslh/docker-compose.yml
 services:
   sslh:
     image: ghcr.io/yrutschle/sslh:latest
@@ -108,4 +108,4 @@ services:
     restart: unless-stopped
 EOF
 newgrp docker
-docker compose -f /sslh/docker-compose.yml up -d
+docker compose -f /srv/sslh/docker-compose.yml up -d
