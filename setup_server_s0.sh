@@ -6,7 +6,7 @@ sudo apt autoremove -y
 
 # Start install basics
 sudo apt update -y
-sudo apt install zsh git python-is-python3 ufw cron -y
+sudo apt install zsh vim git python-is-python3 ufw cron -y
 # End install basics
 
 # Start setup user
